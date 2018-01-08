@@ -1,7 +1,8 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <!--meta http-equiv="X-UA-Compatible" content="IE=Edge"-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, intital-scale=1">
     <title>{% block title %}{% endblock %}</title>
@@ -9,10 +10,13 @@
     <link rel="stylesheet" href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css">
 </head>
 <body>
+    {% include "header.html" %}
     <div class="container">
         {% block content %}
         {% endblock %}
     </div>
-<script src="http://lib.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    {% include "footer.html" %}
+    {% block javascript %}{% endblock %}
+<!--script src="http://lib.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script-->
 </body>
 </html>
