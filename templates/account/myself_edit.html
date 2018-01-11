@@ -7,13 +7,16 @@
     <h1>My Information</h1>
     <div class="row">
         <div class="col-md-6">
+        <form class="form-horizontal" action="." method="post">{% csrf_token %}
             <div class="row">
                 <div class="col-md-4 text-right"><span>User name:</span></div>
-                <div class="col-md-8 text-left"><span>{{ user.username }}</span></div>
+                <div class="col-md-8 text-left"><span>{{ user0.username }}</span></div>
             </div>
             {% include "account/myself_elem.html" %}
-            <a href="{% url 'account:edit_my_information' %}"><button class="btn btn-primary
-            btn-lg">Edit my information</button></a>
+            <div class="row">
+                <input type="submit" class="btn btn-primary btn-lg" value="Save my information">
+            </div>
+        </form>
         </div>
         <div class="col-md-6">
             <p>picture</p>

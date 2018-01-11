@@ -19,6 +19,6 @@ class UserInfo(models.Model):
     aboutme = models.TextField(blank=True)
 
     def __str__(self):
-        return "user:{}".format(self.user.name)
+        return "user:{}".format(self.user.username)
 
 # Create your models here.

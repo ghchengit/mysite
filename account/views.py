@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -35,6 +36,7 @@ def register(request):
             new_profile = userprofile_form.save(commit=False)
             new_profile.user = newuser
             new_profile = userprofile_form.save()
+            UserInfo.objects.create(user=new_user)
             return HttpResponse("successfully")
         else:
             return HttpResponse("invalid input")
@@ -61,11 +63,34 @@ def register0(request):
 
 @login_required(login_url="/account/login/")
 def myself(request):
-    #user = request.user
-    user = User.objects.get(username=request.user.username)
-    userprofile = UserProfile.objects.get(username=request.user.username)
+    user = request.user
+    #user = User.objects.get(username=request.user.username)
+    userprofile = UserProfile.objects.get(user=user)
     userinfo = UserInfo.objects.get(user=user)
-    return render(request, "account/mayself.html", {"user":user, "userprofile":userprofile, "userinfo":userinfo})
+    return render(request, "account/myself.html", {"user":user, "userprofile":userprofile, "userinfo":userinfo})
+    
+    
+@login_required(login_url="/account/login/")
+def myself_edit(request):
+    user = request.user
+    userprofile = UserProfile.objects.get(user=user)
+    userinfo = UserInfo.objects.get(user=user)
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=user)
+        userprofile_form = UserProfileForm(request.POST, instance=userprofile)
+        userinfo_form = UserInfoForm(request.POST, instance=userinfo)
+        if user_form.is_valid() and userprofile_form.is_valid() and userinfo_form.is_valid():
+            user_form.save()
+            userprofile_form.save()
+            userinfo_form.save()
+        return HttpResponseRedirect(reverse('account:my_information'))
+    else:
+        user_form = UserForm(instance=user)
+        userprofile_form = UserProfileForm(instance=userprofile)
+        userinfo_form = UserInfoForm(instance=userinfo)
+        return render(request, "account/myself_edit.html", {"user0":user, "user":user_form, 
+        "userprofile":userprofile_form, "userinfo":userinfo_form})
+
             
 
 # Create your views here.
