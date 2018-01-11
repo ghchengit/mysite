@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% load staticfiles %}
 
-{% block title %}password change done{% endblock %}
+{% block title %}my information{% endblock %}
 
 {% block content %}
 <div class="row text-center vertical-middle-sm">
-    <p>Your password change</p>
+    <h1>My Information</h1>
+    {% include "myself_elem.html" %}
 </div>
 {% endblock %}
