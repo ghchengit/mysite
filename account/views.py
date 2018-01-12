@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
@@ -72,6 +73,7 @@ def myself(request):
     
 @login_required(login_url="/account/login/")
 def myself_edit(request):
+    args = {}
     user = request.user
     userprofile = UserProfile.objects.get(user=user)
     userinfo = UserInfo.objects.get(user=user)
@@ -80,16 +82,23 @@ def myself_edit(request):
         userprofile_form = UserProfileForm(request.POST, instance=userprofile)
         userinfo_form = UserInfoForm(request.POST, instance=userinfo)
         if user_form.is_valid() and userprofile_form.is_valid() and userinfo_form.is_valid():
+        #if True:
             user_form.save()
             userprofile_form.save()
             userinfo_form.save()
-        return HttpResponseRedirect(reverse('account:my_information'))
+        #else:
+            #raise forms.ValidationError("bad input!")
+            return HttpResponseRedirect(reverse('account:my_information'))
     else:
         user_form = UserForm(instance=user)
         userprofile_form = UserProfileForm(instance=userprofile)
         userinfo_form = UserInfoForm(instance=userinfo)
-        return render(request, "account/myself_edit.html", {"user0":user, "user":user_form, 
-        "userprofile":userprofile_form, "userinfo":userinfo_form})
+        
+    args["user_form"] = user_form
+    args["userprofile_form"] = userprofile_form
+    args["userinfo_form"] = userinfo_form
+    
+    return render(request, "account/myself_edit.html", args)
 
             
 

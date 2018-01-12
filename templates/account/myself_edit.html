@@ -9,10 +9,31 @@
         <div class="col-md-6">
         <form class="form-horizontal" action="." method="post">{% csrf_token %}
             <div class="row">
-                <div class="col-md-4 text-right"><span>User name:</span></div>
-                <div class="col-md-8 text-left"><span>{{ user0.username }}</span></div>
+                <div class="col-md-4 text-right"><span><strong>User name:</strong></span></div>
+                <div class="col-md-8 text-left"><span>{{ user.username }}</span></div>
             </div>
-            {% include "account/myself_elem.html" %}
+            {% for field in user_form %}           
+            <div class="row">
+                <div class="col-md-4 text-right"><span>{{ field.label_tag }}</span></div>
+                <div class="col-md-8 text-left"><span>{{ field }}</span></div>
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+            {% endfor %}
+            {% for field in userprofile_form %}           
+            <div class="row">
+                <div class="col-md-4 text-right"><span>{{ field.label_tag }}</span></div>
+                <div class="col-md-8 text-left"><span>{{ field }}</span></div>
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+            {% endfor %}
+            {#{ userprofile_form }#}
+            {% for field in userinfo_form %}           
+            <div class="row">
+                <div class="col-md-4 text-right"><span>{{ field.label_tag }}</span></div>
+                <div class="col-md-8 text-left"><span>{{ field }}</span></div>
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+            {% endfor %}
             <div class="row">
                 <input type="submit" class="btn btn-primary btn-lg" value="Save my information">
             </div>
