@@ -99,6 +99,18 @@ def myself_edit(request):
     args["userinfo_form"] = userinfo_form
     
     return render(request, "account/myself_edit.html", args)
+    
+
+@login_required(login_url="/account/login/")
+def my_image(request):
+    if request.method == "POST":
+        img = request.POST['img']
+        userinfo = UserInfo.objects.get(user=request.user.id)
+        userinfo.photo = img
+        userinfo.save()
+        return HttpResponse("1")
+    else:
+        return render(request, 'account/imagecrop.html',)
 
             
 

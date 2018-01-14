@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import user_login, register, myself, myself_edit
+from .views import user_login, register, myself, myself_edit, my_image
 from django.contrib.auth import views as auth_views
 
 app_name = "account"
@@ -14,4 +14,5 @@ urlpatterns = [
     path('password-change-done/', auth_views.password_change_done, name='password_change_done'),
     path('my-information/', myself, name='my_information'),
     path('edit-my-information/', myself_edit, name='edit_my_information'),
+    path('my-image/', my_image, name='my_image'),
 ]
