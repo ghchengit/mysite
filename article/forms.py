@@ -4,5 +4,5 @@ from .models import ArticleColumn
 
 class ArticleColumnForm(forms.ModelForm):
     class Meta:
-        model = ArtcileColumn
+        model = ArticleColumn
         fields = ('column',)
